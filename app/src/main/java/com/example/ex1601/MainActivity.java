@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences bootCounterFile;
-    TextView tvReboot;
+    static TextView tvReboot, tvHps;
+    HpPlugReceiver hpPluginReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,5 +24,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         tvReboot = (TextView) findViewById(R.id.tvReboot);
+        tvHps = (TextView) findViewById(R.id.tvHps);
+
+        hpPluginReceiver = new HpPlugReceiver();
+    }
+
+    public static void increaseHpPlugsCounter() {
+        tvHps.setText("" + (Integer.parseInt(tvHps.getText() + "") + 1));
+    }
+
+    protected void onStart() {
+
+        super.onStart();
+    }
+
+    protected void onStop() {
+
+        super.onStop();
     }
 }
