@@ -7,11 +7,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences bootCounterFile;
-    static TextView tvReboot, tvHps;
+    static TextView tvReboot, tvHps, tvFiveHps;
     HpPlugReceiver hpPlugsReceiver;
+    FiveHpPlugsReceiver fiveHpPlugsReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,22 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         tvReboot = (TextView) findViewById(R.id.tvReboot);
         tvHps = (TextView) findViewById(R.id.tvHps);
+        tvFiveHps = (TextView) findViewById(R.id.tvFiveHps);
 
         hpPlugsReceiver = new HpPlugReceiver();
+        fiveHpPlugsReceiver = new FiveHpPlugsReceiver();
     }
 
     public static void increaseHpPlugsCounter() {
         tvHps.setText("" + (Integer.parseInt(tvHps.getText() + "") + 1));
+    }
+
+    public static void increaseFiveHpPlugsCounter() {
+        tvFiveHps.setText("" + (Integer.parseInt(tvHps.getText() + "") + 1));
+    }
+
+    public static int getFiveHpPlugsCounter() {
+        return Integer.parseInt("" + tvFiveHps.getText());
     }
 
     @Override
@@ -41,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFilter hpPlugsFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(hpPlugsReceiver, hpPlugsFilter);
+
+        IntentFilter fivePlugsFilter = new IntentFilter("" + R.string.FIVE_PLUGS_ACTION);
+        registerReceiver(fiveHpPlugsReceiver, fivePlugsFilter);
     }
 
     @Override
@@ -48,5 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
 
         unregisterReceiver(hpPlugsReceiver);
+        unregisterReceiver(fiveHpPlugsReceiver);
     }
 }
