@@ -15,9 +15,9 @@ public class HpPlugReceiver extends BroadcastReceiver {
         {
             MainActivity.increaseHpPlugsCounter();
 
-            counter = MainActivity.getFiveHpPlugsCounter();
+            counter = MainActivity.getHpPlugsCounter();
             if((counter % 5 == 0) && (counter != 0)) {
-                Intent brIntent = new Intent("" + R.string.FIVE_PLUGS_ACTION);
+                Intent brIntent = new Intent(FiveHpPlugsReceiver.FIVE_PLUGS_ACTION);
                 context.sendBroadcast(brIntent);
             }
         }

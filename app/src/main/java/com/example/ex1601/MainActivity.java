@@ -2,6 +2,7 @@ package com.example.ex1601;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -40,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void increaseFiveHpPlugsCounter() {
-        tvFiveHps.setText("" + (Integer.parseInt(tvHps.getText() + "") + 1));
+        tvFiveHps.setText("" + (Integer.parseInt(tvFiveHps.getText() + "") + 1));
     }
 
-    public static int getFiveHpPlugsCounter() {
-        return Integer.parseInt("" + tvFiveHps.getText());
+    public static int getHpPlugsCounter() {
+        return Integer.parseInt("" + tvHps.getText());
     }
 
     @Override
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter hpPlugsFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(hpPlugsReceiver, hpPlugsFilter);
 
-        IntentFilter fivePlugsFilter = new IntentFilter("" + R.string.FIVE_PLUGS_ACTION);
+        IntentFilter fivePlugsFilter = new IntentFilter(FiveHpPlugsReceiver.FIVE_PLUGS_ACTION);
         registerReceiver(fiveHpPlugsReceiver, fivePlugsFilter);
     }
 
